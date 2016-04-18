@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <body>
+            <link rel="stylesheet" href="main.css">
+            <div id="menu">Menu
+                    <button type="button" class= "menuButton" onclick="makeGraph(1)">Graph1</button>
+                    <button type="button" class= "menuButton" onclick="makeGraph(2)">Graph2</button>
+                    <button type="button" class= "menuButton" onclick="makeGraph(3)">Graph3</button>
+                    <button type="button" class= "menuButton" onclick="makeGraph(4)">Graph4</button>
+            </div>
+            <div id="workspace">Graph Workspace
+                <br/> unlimited height</div>
+        </body>
+
+        <script type="text/javascript" src="JS/d3.min.js"></script>
+        <script>
+        var makeGraph = function (graphType) {
+                document.getElementById("workspace").innerHTML = document.getElementById("workspace").innerHTML + graphType;
+            }
+
+
+        </script>
+    </head>
+</html>
