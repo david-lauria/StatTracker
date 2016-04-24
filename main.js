@@ -32,8 +32,8 @@ var makeUndergrad = function(){
 }*/
 
 var generateGraph = function(){
-    var width = 1000,
-        height = 1000,
+    var width = 500,
+        height = 500,
         radius = Math.min(width, height) / 2;
 
     var color = d3.scale.ordinal()
@@ -55,6 +55,36 @@ var generateGraph = function(){
 
     d3.csv(name , type, function(error, data) {// need to add the formated info in the first argument
         if (error) throw error;
+
+    var select = d3.select("#selector")
+
+    select
+      .on("change", function(d) {
+        var major = d3.select(this).property("major");
+      });
+
+    select.selectAll("option")
+      .data(data)
+      .enter()
+        .append("option")
+        .attr("major", function (d) { return d.major; })
+        .text(function (d) { return d.major; });
+         var select = d3.select("#selector2")
+
+    select
+      .on("change", function(d) {
+        var major = d3.select(this).property("major");
+      });
+
+    select.selectAll("option")
+      .data(data)
+      .enter()
+        .append("option")
+        .attr("major", function (d) { return d.major; })
+        .text(function (d) { return d.major; });
+
+
+
 
         var g = svg.selectAll(".arc")
             .data(pie(data))
