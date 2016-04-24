@@ -144,11 +144,13 @@ var generateComparisonGraph = function(){
 
         g.append("path")
             .attr("d", arc)
+            .match(document.getElementById("selector").nodeValue || document.getElementById("selector2").nodeValue)
             .style("fill", function(d) { return color(d.data.major); });
 
         g.append("text")
             .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
             .attr("dy", ".35em")
+            .match(document.getElementById("selector").nodeValue || document.getElementById("selector2").nodeValue)
             .text(function(d) { return d.data.major; });
     });
 

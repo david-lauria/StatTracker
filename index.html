@@ -27,33 +27,44 @@
                     <script>
             var makeGraph = function (graphType) {
                 d3.select("svg").remove();         // just need to remove the old svg
+                d3.select("#selector").selectAll("option").remove();
+                d3.select("#selector2").selectAll("option").remove();
                 switch(graphType){
                     case 1:
                         name ="Assets/AG_LS.csv";
+                        generateGraph();
                         break;
                     case 2:
                         name ="Assets/buis.csv";
+                        generateGraph();
                         break;
                     case 3:
                         name ="Assets/Design.csv";
+                        generateGraph();
                         break;
                     case 4:
                         name ="Assets/Engineering.csv";
+                        generateGraph();
                         break;
                     case 5:
                         name ="Assets/HS.csv";
+                        generateGraph();
                         break;
                     case 6:
                         name ="Assets/LA_Sci.csv";
+                        generateGraph();
                         break;
                     case 7:
                         name ="Assets/Total.csv";
+                        generateGraph();
                         break;
                     case 8:
+                        generateComparisonGraph();
+                        break;
 
 
                 }
-                generateGraph(); // this needs to go outside of the switch statement. otherwise it never
+                 // this needs to go outside of the switch statement. otherwise it never
                                  // gets to this function
             }
         </script>
