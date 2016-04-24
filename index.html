@@ -1,24 +1,88 @@
 <html>
+<meta charset="utf-8">
     <head>
-        <body>
-            <link rel="stylesheet" href="main.css">
-            <div id="menu">Menu
-                    <button type="button" class= "menuButton" onclick="makeGraph(1)">Graph1</button>
-                    <button type="button" class= "menuButton" onclick="makeGraph(2)">Graph2</button>
-                    <button type="button" class= "menuButton" onclick="makeGraph(3)">Graph3</button>
-                    <button type="button" class= "menuButton" onclick="makeGraph(4)">Graph4</button>
-            </div>
-            <div id="workspace">Graph Workspace
-                <br/> unlimited height</div>
-        </body>
-
-        <script type="text/javascript" src="JS/d3.min.js"></script>
-        <script>
-        var makeGraph = function (graphType) {
-                document.getElementById("workspace").innerHTML = document.getElementById("workspace").innerHTML + graphType;
-            }
-
-
-        </script>
     </head>
+
+    <body>
+            <link rel="stylesheet" href="main.css">
+            <div id="menu"> Menu
+                <div id="submenu">
+                    <button type="button" class= "menuButton" onclick="makeGraph(1)">Undergrad</button>
+                    <button type="button" class= "menuButton" onclick="makeGraph(2)">Grad</button>
+                </div>
+            </div>
+            <div id="workspace">
+                <p>
+                    Graph Workspace
+                    <br/>unlimited height
+                </p>
+            </div>
+            <div id="graph">
+                <script src="//d3js.org/d3.v3.min.js"></script>
+                <script>
+
+                    var width = 960,
+                            height = 500,
+                            radius = Math.min(width, height) / 2;
+
+                    var color = d3.scale.ordinal()
+                            .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+
+                    var arc = d3.svg.arc()
+                            .outerRadius(radius - 10)
+                            .innerRadius(radius - 70);
+
+                    var pie = d3.layout.pie()
+                            .sort(null)
+                            .value(function(d) { return d.population; });
+
+                    var svg = d3.select("body").append("svg")
+                            .attr("width", width)
+                            .attr("height", height)
+                            .append("g")
+                            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+                    d3.csv( , type, function(error, data) {// need to add the formated info in the first argument
+                        if (error) throw error;
+
+                        var g = svg.selectAll(".arc")
+                                .data(pie(data))
+                                .enter().append("g")
+                                .attr("class", "arc");
+
+                        g.append("path")
+                                .attr("d", arc)
+                                .style("fill", function(d) { return color(d.data.age); });
+
+                        g.append("text")
+                                .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+                                .attr("dy", ".35em")
+                                .text(function(d) { return d.data.age; });
+                    });
+
+                    function type(d) {
+                        d.population = +d.population;
+                        return d;
+                    }
+
+                </script>
+            </div>
+
+        <script type="text/javascript" src="main.js"></script>
+        <script>
+            var makeGraph = function (graphType) {
+
+                switch(graphType){
+                    case 1:
+                            makeUndergrad();
+                        break;
+                    case 2:
+                            makeGrad();
+                        break;
+                }
+                //document.getElementById("workspace").innerHTML = document.getElementById("workspace").innerHTML + graphType;
+            }
+        </script>
+    </body>
+
 </html>
