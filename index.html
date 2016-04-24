@@ -30,10 +30,10 @@
                     //but i have been unable to get it to redisplay each time a button is pressed.
                 </script>
             </div>
-
         <script type="text/javascript" src="main.js"></script>
         <script>
             var makeGraph = function (graphType) {
+                d3.select("svg").remove();         // just need to remove the old svg
                 switch(graphType){
                     case 1:
                         name ="Assets/AG_LS.csv";
@@ -56,8 +56,10 @@
                     case 7:
                         name ="Assets/Total.csv";
                         break;
-                     generateGraph();
+
                 }
+                generateGraph(); // this needs to go outside of the switch statement. otherwise it never
+                                 // gets to this function
             }
         </script>
     </body>
