@@ -20,18 +20,7 @@
                 <p>
                     Graph Workspace
                     <br/>unlimited height
-                </p>
-            </div>
-            <div id="graph">
-                <script src="//d3js.org/d3.v3.min.js"></script>
-                <script>
-                    name = "Assets/AG_LS.csv";
-                    //if arc code is here it works for the first button press if you leave "d3.csv" in the other function
-                    //but i have been unable to get it to redisplay each time a button is pressed.
-                </script>
-            </div>
-        <script type="text/javascript" src="main.js"></script>
-        <script>
+                    <script>
             var makeGraph = function (graphType) {
                 d3.select("svg").remove();         // just need to remove the old svg
                 switch(graphType){
@@ -62,6 +51,18 @@
                                  // gets to this function
             }
         </script>
+                </p>
+            </div>
+            <div id="graph">
+                <script src="//d3js.org/d3.v3.min.js"></script>
+                <script>
+                    name = "Assets/AG_LS.csv";
+                    //if arc code is here it works for the first button press if you leave "d3.csv" in the other function
+                    //but i have been unable to get it to redisplay each time a button is pressed.
+                </script>
+            </div>
+        <script type="text/javascript" src="main.js"></script>
+
     </body>
 
 </html>

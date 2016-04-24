@@ -32,8 +32,8 @@ var makeUndergrad = function(){
 }*/
 
 var generateGraph = function(){
-    var width = 500,
-        height = 500,
+    var width = 1000,
+        height = 1000,
         radius = Math.min(width, height) / 2;
 
     var color = d3.scale.ordinal()
@@ -47,7 +47,7 @@ var generateGraph = function(){
         .sort(null)
         .value(function(d) { return d.population; });
 
-    var svg = d3.select("body").append("svg")
+    var svg = d3.select("#workspace").append("svg")
         .attr("width", width)
         .attr("height", height)
         .append("g")
