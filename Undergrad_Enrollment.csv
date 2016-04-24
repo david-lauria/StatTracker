@@ -1,9 +1,4 @@
-IOWA STATE UNIVERSITY OF SCIENCE AND TECHNOLOGY,,,,,,,,,,,,
-OFFICE OF THE REGISTRAR,,,,,,,,,,,,
-Enrollment Statistics for Fall 2015,,,,,,,,,,,,
-,,,,,,,,,,,,
-,,Freshmen,,Sophomores,,Juniors,,Seniors,,Specials ,,Grand Total
-College,Curriculum/Major,M,F,M,F,M,F,M,F,M,F,
+College,Curriculum/Major,Freshmen_M,Freshmen_F,Sophomores_M,Sophomores_F,Juniors_M,Juniors_F,Seniors_M,Seniors_F,Specials_M,Specials_F,Grand_Total
 Agriculture and Life Sciences,Agriculture Specials,,,,,,,,,58,52,110
 ,Agriculture Certificate (Non-Degree),,,,,,,,,1,,1
 ,Agricultural and Life Sciences Education,3,32,6,29,12,40,10,42,,,174

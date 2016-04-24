@@ -70,13 +70,15 @@
 
         <script type="text/javascript" src="main.js"></script>
         <script>
+            var name;
             var makeGraph = function (graphType) {
-
                 switch(graphType){
                     case 1:
+                            name = "Undergrad_Enrollment.csv"
                             makeUndergrad();
                         break;
                     case 2:
+                            name = "Grad_Enrollment.csv"
                             makeGrad();
                         break;
                 }
