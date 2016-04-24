@@ -21,6 +21,9 @@ p {
 }
 
 #workspace {
+    padding-left: 10px;
+    width: 90%;
+    height: 100%;
     outline: 1px solid;
 
 }
@@ -45,4 +48,28 @@ p {
 
 .arc path {
     stroke: #fff;
+}
+
+
+.bar {
+    fill: steelblue;
+}
+
+.bar:hover {
+    fill: brown;
+}
+
+.axis {
+    font: 15px sans-serif;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+.x.axis path {
+    display: none;
 }
