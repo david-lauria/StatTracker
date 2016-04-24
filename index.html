@@ -5,11 +5,16 @@
 
     <body>
             <link rel="stylesheet" href="main.css">
+
             <div id="menu"> Menu
-                <div id="submenu">
-                    <button type="button" class= "menuButton" onclick="makeGraph(1)">Undergrad</button>
-                    <button type="button" class= "menuButton" onclick="makeGraph(2)">Grad</button>
-                </div>
+                <br>
+                <button type="button" class= "menuButton" onclick="makeGraph(1)">Agriculture and Life Sciences</button>
+                <button type="button" class= "menuButton" onclick="makeGraph(2)">Business</button>
+                <button type="button" class= "menuButton" onclick="makeGraph(3)">Design</button>
+                <button type="button" class= "menuButton" onclick="makeGraph(4)">Engineering</button>
+                <button type="button" class= "menuButton" onclick="makeGraph(5)">Human Sciences</button>
+                <button type="button" class= "menuButton" onclick="makeGraph(6)">Liberal Arts and Sciences</button>
+                <button type="button" class= "menuButton" onclick="makeGraph(7)">Grand Total</button>
             </div>
             <div id="workspace">
                 <p>
@@ -20,69 +25,39 @@
             <div id="graph">
                 <script src="//d3js.org/d3.v3.min.js"></script>
                 <script>
-
-                    var width = 960,
-                            height = 500,
-                            radius = Math.min(width, height) / 2;
-
-                    var color = d3.scale.ordinal()
-                            .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
-
-                    var arc = d3.svg.arc()
-                            .outerRadius(radius - 10)
-                            .innerRadius(radius - 70);
-
-                    var pie = d3.layout.pie()
-                            .sort(null)
-                            .value(function(d) { return d.population; });
-
-                    var svg = d3.select("body").append("svg")
-                            .attr("width", width)
-                            .attr("height", height)
-                            .append("g")
-                            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-
-                    d3.csv( , type, function(error, data) {// need to add the formated info in the first argument
-                        if (error) throw error;
-
-                        var g = svg.selectAll(".arc")
-                                .data(pie(data))
-                                .enter().append("g")
-                                .attr("class", "arc");
-
-                        g.append("path")
-                                .attr("d", arc)
-                                .style("fill", function(d) { return color(d.data.age); });
-
-                        g.append("text")
-                                .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
-                                .attr("dy", ".35em")
-                                .text(function(d) { return d.data.age; });
-                    });
-
-                    function type(d) {
-                        d.population = +d.population;
-                        return d;
-                    }
-
+                    name = "Assets/AG_LS.csv";
+                    //if arc code is here it works for the first button press if you leave "d3.csv" in the other function
+                    //but i have been unable to get it to redisplay each time a button is pressed.
                 </script>
             </div>
 
         <script type="text/javascript" src="main.js"></script>
         <script>
-            var name;
             var makeGraph = function (graphType) {
                 switch(graphType){
                     case 1:
-                            name = "Undergrad_Enrollment.csv"
-                            makeUndergrad();
+                        name ="Assets/AG_LS.csv";
                         break;
                     case 2:
-                            name = "Grad_Enrollment.csv"
-                            makeGrad();
+                        name ="Assets/buis.csv";
                         break;
+                    case 3:
+                        name ="Assets/Design.csv";
+                        break;
+                    case 4:
+                        name ="Assets/Engineering.csv";
+                        break;
+                    case 5:
+                        name ="Assets/HS.csv";
+                        break;
+                    case 6:
+                        name ="Assets/LA_Sci.csv";
+                        break;
+                    case 7:
+                        name ="Assets/Total.csv";
+                        break;
+                     generateGraph();
                 }
-                //document.getElementById("workspace").innerHTML = document.getElementById("workspace").innerHTML + graphType;
             }
         </script>
     </body>
