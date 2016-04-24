@@ -111,6 +111,7 @@ var generateGraph = function(){
 
 
 var generateComparisonGraph = function(){
+    d3.select("svg").remove();
     var width = 500,
         height = 500,
         radius = Math.min(width, height) / 2;
@@ -135,22 +136,32 @@ var generateComparisonGraph = function(){
     d3.csv(name , type, function(error, data) {// need to add the formated info in the first argument
         if (error) throw error;
 
+            var selected = [];
+            var s1 = document.getElementById("selector")[document.getElementById("selector").selectedIndex].text;
+            var s2 = document.getElementById("selector2")[document.getElementById("selector2").selectedIndex].text;
+
+            var j = 0;
+            for(var i = 0; i < data.length; i++){
+            if(data[i].major == s1 || data[i].major == s2){
+                selected[j] = data[i];
+                j++;
+            }
+            }
+
 
         // somewhere in this area below i need to use only the values in selector and selector2 and just return that data.
         var g = svg.selectAll(".arc")
-            .data(pie(data))
+            .data(pie(selected))
             .enter().append("g")
             .attr("class", "arc");
 
         g.append("path")
             .attr("d", arc)
-            .match(document.getElementById("selector").nodeValue || document.getElementById("selector2").nodeValue)
-            .style("fill", function(d) { return color(d.data.major); });
+            .style("fill", function(d) { return color(d.data.major); }); // this needs to be fixed now somehow.... it just colors in black with the new array.
 
         g.append("text")
             .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
             .attr("dy", ".35em")
-            .match(document.getElementById("selector").nodeValue || document.getElementById("selector2").nodeValue)
             .text(function(d) { return d.data.major; });
     });
 
