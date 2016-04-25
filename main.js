@@ -1,49 +1,29 @@
 /**
- * Created by Rex Borseth on 4/22/2016.
+ * Team Front Row
  */
 
 src = "//d3js.org/d3.v3.min.js";
 
-
-// an attempt to use d3 to parse data
-
-/*
- var makeUndergrad = function(){
- var data = d3.csv.parse(name,function(d) {
- return {
- College: d.College,
- Curriculum: d.Curriculum,
- Freshmen_M: +d.Freshmen_M,
- Freshmen_F: +d.Freshmen_F,
- Sophomores_M: +d.Sophomores_M,
- Sophomores_F: +d.Sophomores_F,
- Juniors_M: +d.Juniors_M,
- Juniors_F: +d.Juniors_F,
- Seniors_M: +d.Seniors_M,
- Seniors_F: +d.Seniors_F,
- Specials_M: +d.Specials_M,
- Specials_F: +d.Specials_F,
- Grand_Total: +d.Grand_Total
- };
- }
- )
- subbuttons(data);
- displayGraph();
- }*/
 var barGraph = {
 
     margin: {
-        top: 20,
+        top: 40,
         right: 20,
         bottom: 20,
         left: 20
     },
-    width: 1000,
-    height: 256
+    padding: {
+        top: 20,
+        bottom: 20,
+        right: 20,
+        left: 20
+    },
+    width: 1024,
+    height: 650
 
 };
 
-var x, y;
+var x, y, color, arc, labelArc;
 
 var generateGraph = function () {
 
@@ -51,46 +31,12 @@ var generateGraph = function () {
     var height = 1024;
 
 
-    var xAxis = d3.svg.axis()
-        .scale(x)
-        .orient("bottom");
-
-    var yAxis = d3.svg.axis()
-        .scale(y)
-        .orient("left")
-        .ticks(10, "");
-
     var svg = d3.select("#workspace").append("svg")
+        .classed("bar-graph", true)
         .attr("width", barGraph.width)
-        .attr("height", height)
-        .append("g")
-        .attr("transform", "translate(" + barGraph.margin.left + "," + "-" + barGraph.margin.top + ")");
-
-    //end bar stuff
-
-    /*
-     var width = 500,
-     height = 500,
-     radius = Math.min(width, height) / 2;
-
-     var color = d3.scale.ordinal()
-     .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
-
-     var arc = d3.svg.arc()
-     .outerRadius(radius - 10)
-     .innerRadius(radius - 150);
-
-     var pie = d3.layout.pie()
-     .sort(null)
-     .value(function(d) { return d.population; });
-
-     var svg = d3.select("#workspace").append("svg")
-     .attr("width", width)
-     .attr("height", height)
-     .append("g")
-     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-     */
-
+        .attr("height", barGraph.height + barGraph.margin.bottom)
+        .attr("style", "background:lightgray")
+        .append("g");
     d3.csv(name, type, function (error, data) {
         if (error) throw error;
 
@@ -131,67 +77,48 @@ var generateGraph = function () {
 
         //star bar
 
-        x.domain(data.map(function (d) {
+        y.domain(data.map(function (d) {
             return d.major;
         }));
-        y.domain([0, d3.max(data, function (d) {
+        x.domain([0, d3.max(data, function (d) {
             return d.population;
         })]);
 
-        svg.append("g")
-            .attr("class", "x-axis")
-            .attr("transform", "translate(0," + barGraph.height + ")")
-            .call(xAxis)
-            .selectAll("text")
-            .style("text-anchor", "end")
-            .attr("dx", "-.5em")
-            .attr("dy", ".15em")
-            .attr("transform", "rotate(-70)");
 
-        svg.append("g")
-            .attr("class", "y-axis")
-            .attr("transform", "translate(20,0)")
-            .call(yAxis)
-            .append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 6)
-            .attr("dy", ".71em")
-            .style("text-anchor", "end")
-            .text("Number of Students");
+        var xAxis = d3.svg.axis(d3.select(".bar-graph"))
+            .scale(x)
+            .orient("bottom")
+            .ticks(10);
+
+        var yAxis = d3.svg.axis(d3.select(".bar-graph"))
+            .scale(y)
+            .orient("right");
 
         svg.selectAll(".bar")
             .data(data)
             .enter().append("rect")
-            .attr("class", "bar")
-            .attr("x", function (d) {
-                return x(d.major);
-            })
-            .attr("width", x.rangeBand() * 0.9)
+            .classed("bar", true)
             .attr("y", function (d) {
-                return y(d.population);
+                return y(d.major);
             })
-            .attr("height", function (d) {
-                return barGraph.height - y(d.population);
+            .attr("height", y.rangeBand() * 0.98)
+            .attr("width", function (d) {
+                return x(d.population);
             });
 
+        svg.append("g")
+            .attr("class", "y-axis")
+            .attr("transform", "translate(0,0)")
+            .call(yAxis)
+            .selectAll("text")
+            .attr("style", "align:left");
+
+        svg.append("g")
+            .attr("class", "x-axis")
+            .attr("transform", "translate(0," + barGraph.height + ")")
+            .call(xAxis);
         //end bar
 
-        /*
-
-         var g = svg.selectAll(".arc")
-         .data(pie(data))
-         .enter().append("g")
-         .attr("class", "arc");
-
-         g.append("path")
-         .attr("d", arc)
-         .style("fill", function(d) { return color(d.data.major); });
-
-         g.append("text")
-         .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
-         .attr("dy", ".35em")
-         .text(function(d) { return d.data.major; });
-         */
     });
 
     function type(d) {
@@ -205,17 +132,13 @@ var generateGraph = function () {
 
 
 var generateComparisonGraph = function () {
-    d3.select("svg").remove();
+    d3.select(".bar-graph").remove();
+    if (d3.select(".pie-graph")) {
+        d3.select(".pie-graph").remove();
+    }
     var height = 500;
     var width = 500;
-    var radius = height / 2 - height * 0.1;
 
-    var color = d3.scale.ordinal()
-        .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
-
-    var arc = d3.svg.arc()
-        .outerRadius(radius - 10)
-        .innerRadius(radius - 150);
 
     var pie = d3.layout.pie()
         .sort(null)
@@ -224,6 +147,7 @@ var generateComparisonGraph = function () {
         });
 
     var svg = d3.select("#workspace").append("svg")
+        .classed("pie-graph", true)
         .attr("width", width)
         .attr("height", height)
         .append("g")
@@ -244,8 +168,6 @@ var generateComparisonGraph = function () {
             }
         }
 
-
-        // somewhere in this area below i need to use only the values in selector and selector2 and just return that data.
         var g = svg.selectAll(".arc")
             .data(pie(selected))
             .enter().append("g")
@@ -255,17 +177,21 @@ var generateComparisonGraph = function () {
             .attr("d", arc)
             .style("fill", function (d) {
                 return color(d.data.major);
-            }); // this needs to be fixed now somehow.... it just colors in black with the new array.
+            });
 
-        g.append("text")
+        d3.selectAll(".arc").append("text")
             .attr("transform", function (d) {
-                return "translate(" + arc.centroid(d) + ")";
+                return "translate(" + labelArc.centroid(d) + ")";
             })
+            .attr("y", "0")
             .attr("dy", ".35em")
             .text(function (d) {
-                return d.data.major + " " + d.data.population;
-            });
+                return d.data.major + ": " + d.data.population;
+            })
+            .call(wrap, "120");
+
     });
+
 
     function type(d) {
         d.population = +d.population;
@@ -274,9 +200,49 @@ var generateComparisonGraph = function () {
 
 };
 
+function wrap(text, width) {
+    text.each(function () {
+        var text = d3.select(this),
+            words = text.text().split(/\s+/).reverse(),
+            word,
+            line = [],
+            lineNumber = 0,
+            lineHeight = 1.1, // ems
+            y = text.attr("y"),
+            dy = parseFloat(text.attr("dy")),
+            tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+        while (word = words.pop()) {
+            line.push(word);
+            console.log(word);
+            tspan.text(line.join(" "));
+            console.log(tspan.node().getComputedTextLength());
+            if (tspan.node().getComputedTextLength() > width) {
+
+                line.pop();
+                tspan.text(line.join(" "));
+                line = [word];
+                tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+            }
+        }
+    });
+}
+
 var init = function () {
 
-    x = d3.scale.ordinal().rangeRoundBands([0, barGraph.width, .1]);
-    y = d3.scale.linear().range([barGraph.height, 0]);
+    var radius = 500 / 2 - 500 * 0.1;
+    color = d3.scale.ordinal()
+        .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+
+    arc = d3.svg.arc()
+        .outerRadius(radius - 10)
+        .innerRadius(radius - 100);
+
+
+    labelArc = d3.svg.arc()
+        .outerRadius(radius - 20)
+        .innerRadius(radius);
+
+    x = d3.scale.linear().range([0, barGraph.width * 0.99]);
+    y = d3.scale.ordinal().rangeRoundBands([0, barGraph.height, .1]);
 };
 

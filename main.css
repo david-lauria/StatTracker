@@ -7,11 +7,15 @@
     box-sizing: border-box;
 }
 
+html {
+    background: lightgray;
+}
+
 .container {
     margin: 0 auto;
     padding-left: 30px;
     padding-right: 30px;
-    width: 1280px;
+    width: 1024px;
 }
 
 #menu {
@@ -28,26 +32,29 @@
 }
 
 #menu .menuButton {
-    width: auto;
-    height: auto;
-    display: inline-block;
-    background: darkgoldenrod;
+    align-content: center;
+    text-anchor: bottom;
+    width: 13.93%;
+    display: inline;
+    background: goldenrod;
     border: transparent;
+    font-weight: 600;
 }
 
 #menu .menuButton:hover {
-    background: goldenrod;
+    background: lightgoldenrodyellow;
 }
 
 #workspace {
-    background: goldenrod;
-    display: inline;
+    background: lightgray;
+    display: inline-block;
+    width: 100%;
     position: relative;
 }
 
 #workspace select {
     min-width: 20%;
-    background: lightgray;
+    background: white;
 }
 
 .arc text {
@@ -59,8 +66,12 @@
     stroke: #fff;
 }
 
+.arc text {
+    font-weight: 600;
+}
+
 .bar {
-    fill: darkred;
+    fill: rgba(145, 0, 0, 0.8);
 }
 
 .bar:hover {
@@ -69,6 +80,15 @@
 
 .axis {
     font: 15px sans-serif;
+}
+
+.x-axis, .y-axis {
+    font: 14px sans-serif;
+    font-weight: 600;
+}
+
+.x-axis {
+
 }
 
 .axis path,
