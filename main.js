@@ -243,7 +243,7 @@ var generateComparisonGraph = function () {
                 j++;
             }
         }
-
+        var pos = d3.svg.arc().innerRadius(radius).outerRadius(radius);
 
         // somewhere in this area below i need to use only the values in selector and selector2 and just return that data.
         var g = svg.selectAll(".arc")
@@ -257,14 +257,21 @@ var generateComparisonGraph = function () {
                 return color(d.data.major);
             }); // this needs to be fixed now somehow.... it just colors in black with the new array.
 
-        g.append("text")
-            .attr("transform", function (d) {
+        g.append("text") .attr("transform", function(d) { return "translate(" +  //this is what i added in
+        pos.centroid(d) + ")"; })
+       .attr("dy", 5)
+      .style("text-anchor", "middle")
+      .text(function (d) {
+        return d.data.major + " " + d.data.population; });
+
+       /* .attr("transform", function (d) {
                 return "translate(" + arc.centroid(d) + ")";
             })
-            .attr("dy", ".35em")
+            .attr("dy", ".35em")                                //this is what i cut out
             .text(function (d) {
                 return d.data.major + " " + d.data.population;
-            });
+            });*/
+
     });
 
     function type(d) {
