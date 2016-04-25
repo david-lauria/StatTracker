@@ -1,54 +1,54 @@
 <html>
 <meta charset="utf-8">
-    <head>
-    </head>
+<head>
+</head>
 
-    <body>
-            <link rel="stylesheet" href="main.css">
+<body>
+<link rel="stylesheet" href="main.css">
 
-            <div id="menu"> Menu
-                <br>
-                <button type="button" class= "menuButton" onclick="makeGraph(1)">Agriculture and Life Sciences</button>
-                <button type="button" class= "menuButton" onclick="makeGraph(2)">Business</button>
-                <button type="button" class= "menuButton" onclick="makeGraph(3)">Design</button>
-                <button type="button" class= "menuButton" onclick="makeGraph(4)">Engineering</button>
-                <button type="button" class= "menuButton" onclick="makeGraph(5)">Human Sciences</button>
-                <button type="button" class= "menuButton" onclick="makeGraph(6)">Liberal Arts and Sciences</button>
-                <button type="button" class= "menuButton" onclick="makeGraph(7)">Grand Total</button>
-            </div>
-            <div id="workspace">
-                <select id="selector"></select>
-                compared to
-                <select id="selector2"></select>
-                <button type="button"  onclick="generateComparisonGraph()">Compare</button>
-                <p>
-                    Graph Workspace
-                    <script>
+<section class="container">
+    <div id="menu"><h1>Undergraduate Enrollment Tracker</h1>
+        <br>
+        <button type="button" class="menuButton" onclick="makeGraph(1)">Agriculture and Life Sciences</button>
+        <button type="button" class="menuButton" onclick="makeGraph(2)">Business</button>
+        <button type="button" class="menuButton" onclick="makeGraph(3)">Design</button>
+        <button type="button" class="menuButton" onclick="makeGraph(4)">Engineering</button>
+        <button type="button" class="menuButton" onclick="makeGraph(5)">Human Sciences</button>
+        <button type="button" class="menuButton" onclick="makeGraph(6)">Liberal Arts and Sciences</button>
+        <button type="button" class="menuButton" onclick="makeGraph(7)">Grand Total</button>
+    </div>
+    <div id="workspace">
+        <button type="button" onclick="generateComparisonGraph()">Compare</button>
+
+        <select id="selector"></select>
+        compared to
+        <select id="selector2"></select>
+        <script>
             var makeGraph = function (graphType) {
                 d3.select("svg").remove();         // just need to remove the old svg
                 d3.select("#selector").selectAll("option").remove();
                 d3.select("#selector2").selectAll("option").remove();
-                switch(graphType){
+                switch (graphType) {
                     case 1:
-                        name ="Assets/AG_LS.csv";
+                        name = "Assets/AG_LS.csv";
                         break;
                     case 2:
-                        name ="Assets/buis.csv";
+                        name = "Assets/buis.csv";
                         break;
                     case 3:
-                        name ="Assets/Design.csv";
+                        name = "Assets/Design.csv";
                         break;
                     case 4:
-                        name ="Assets/Engineering.csv";
+                        name = "Assets/Engineering.csv";
                         break;
                     case 5:
-                        name ="Assets/HS.csv";
+                        name = "Assets/HS.csv";
                         break;
                     case 6:
-                        name ="Assets/LA_Sci.csv";
+                        name = "Assets/LA_Sci.csv";
                         break;
                     case 7:
-                        name ="Assets/Grand_Total.csv";
+                        name = "Assets/Grand_Total.csv";
 
                         break;
 
@@ -58,18 +58,21 @@
                                  // gets to this function
             }
         </script>
-                </p>
-            </div>
-            <div id="graph">
-                <script src="//d3js.org/d3.v3.min.js"></script>
-                <script>
-                    name = "Assets/AG_LS.csv";
-                    //if arc code is here it works for the first button press if you leave "d3.csv" in the other function
-                    //but i have been unable to get it to redisplay each time a button is pressed.
-                </script>
-            </div>
-        <script type="text/javascript" src="main.js"></script>
+        <!--
+        <div id="graph">
+            <script>
+                name = "Assets/AG_LS.csv";
+                //if arc code is here it works for the first button press if you leave "d3.csv" in the other function
+                //but i have been unable to get it to redisplay each time a button is pressed.
+            </script>
+        </div>
+        -->
+    </div>
 
-    </body>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script type="text/javascript" src="main.js" onload="init()"></script>
+</section>
+
+</body>
 
 </html>
